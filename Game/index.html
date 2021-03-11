@@ -21,8 +21,8 @@
 
     // ******** START CODING ON THE NEXT LINE ********
     
-    var body = new THREE.SphereGeometry (100);
-    var cover = new THREE.MeshNormalMaterial (flat);
+    var body = new THREE.SphereGeometry(100);
+    var cover = new THREE.MeshNormalMaterial(flat);
     var avatar = new THREE.Mesh(body,cover);
     scene.add(avatar);
     
@@ -33,9 +33,21 @@
     scene.add(rightHand);
     
     
-    var leftHand = new THREE.Mesh(hand,cover);
-    rightHand.position.set(150,0,0);
+    var leftHand = new THREE.Mesh(hand, cover);
+    leftHand.position.set(150,0,0);
     scene.add(leftHand);
+    
+    var foot = new THREE.SphereGeometry(50);
+    
+    var rightFoot = new THREE.Mesh(hand,cover);
+    rightFoot.position.set(-75,-125,0);
+    scene.add(rightFoot);
+    
+    var leftFoot = new THREE.Mesh(hand,cover);
+    leftFoot.position.set(75,-125,0);
+    scene.add(leftFoot); 
+    
+    
     
     
     
