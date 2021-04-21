@@ -12,7 +12,7 @@
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
   camera.position.z = 500;
-
+  camera.position.y = 200;
   
     
 
@@ -73,8 +73,8 @@
     
       function gestionarTecla(evento){
        var codigo = evento.code;
-       if (codigo == 'ArrowLeft') marcador.position.x = marcador.position.x -5;
-        if (codigo == 'ArrowRight') marcador.position.x = marcador.position.x +5;
+       if (codigo == 'ArrowLeft') marcador.rotation.y = marcador.rotation.y -0.01;
+        if (codigo == 'ArrowRight') marcador.rotation.y = marcador.position.x +0.01;
         if (codigo == 'ArrowUp') marcador.position.z = marcador.position.z -5;
         if (codigo == 'ArrowDown') marcador.position.z = marcador.position.z +5;
         if (codigo== 'KeyC') isCartwheeling = !isCartwheeling;
@@ -124,7 +124,7 @@
     
     
     
-    camera.LookAt(marcador.position)
+
     
     // Now, show what the camera sees on the screen:
   renderer.render(scene, camera);
