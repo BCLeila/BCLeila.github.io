@@ -11,7 +11,7 @@
   // The "camera" is what sees the stuff:
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
-  camera.position.z = 600;
+  camera.position.z = 500;
   camera.position.y = 100;
   
     
@@ -73,17 +73,17 @@
     
       function gestionarTecla(evento){
        var codigo = evento.code;
-       if (codigo == 'ArrowLeft') marcador.rotation.y = marcador.rotation.y -0.01;
-        if (codigo == 'ArrowRight') marcador.rotation.y = marcador.position.y +0.01;
-        if (codigo == 'ArrowUp') marcador.position.z = marcador.position.z -5;
-        if (codigo == 'ArrowDown') marcador.position.z = marcador.position.z +5;
+       if (codigo == 'ArrowLeft') marcador.rotation.y = marcador.rotation.y +0.01;
+        if (codigo == 'ArrowRight') marcador.rotation.y = marcador.rotation.y -0.01;
+        if (codigo == 'ArrowUp') avanzar(marcador, marcador.rotation.y);
+        if (codigo == 'ArrowDown') marcador.position.z = marcador.position.z -5;
         if (codigo== 'KeyC') isCartwheeling = !isCartwheeling;
         if (codigo== 'KeyF') isFlipping = !isFlipping;
    }
     
     function hacerArbol(x,z) {
         var cilindro = new THREE.CylinderGeometry(50, 50, 200);
-        var textura_tronco = new THREE.MeshBasicMaterial ({color:'siena'});
+        var textura_tronco = new THREE.MeshBasicMaterial ({color:'sienna'});
         var tronco = new THREE.Mesh(cilindro, textura_tronco);
         
         var copa = new THREE.Mesh(
@@ -111,8 +111,7 @@
 }
     }
     
-    crearCampoArboles(-2000,2000,-2000,2000,500)
-
+    crearCampoArboles(-2000,2000,-2000,2000,500);
 
 
     
@@ -121,6 +120,18 @@
     scene.add(marcador);
     marcador.add(avatar);
     marcador.add(camera);
+    
+    
+    function avanzar(objeto,grados){
+       
+        console.log("grados:" + grados);
+        console.log("x:" + objeto.position.x );
+        console.log("Z:" + objeto.position.z );
+        console.log ("Cos(grados):"+ Math.cos(grados));
+        console.log ("Sin(grados):" + Math.sin(grados));
+        objeto.position.x += 20*Math.cos(grados);
+        objeto.position.z += 20*Math.sin(grados);
+    }
     
     
     
