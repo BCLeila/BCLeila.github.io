@@ -12,7 +12,9 @@
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
   camera.position.z = 500;
-  camera.position.y = 100;
+  camera.position.x = 0;
+  camera.position.y = 0;   
+ 
   
     
 
@@ -75,8 +77,8 @@
        var codigo = evento.code;
        if (codigo == 'ArrowLeft') marcador.rotation.y = marcador.rotation.y +0.01;
         if (codigo == 'ArrowRight') marcador.rotation.y = marcador.rotation.y -0.01;
-        if (codigo == 'ArrowUp') avanzar(marcador, marcador.rotation.y);
-        if (codigo == 'ArrowDown') marcador.position.z = marcador.position.z -5;
+        if (codigo == 'ArrowUp') avanzar(marcador, marcador.rotation.y, false);
+        if (codigo == 'ArrowDown') avanzar(marcador, marcador.rotation.y, true);
         if (codigo== 'KeyC') isCartwheeling = !isCartwheeling;
         if (codigo== 'KeyF') isFlipping = !isFlipping;
    }
@@ -107,30 +109,33 @@
     for (var x=minimo_x; x<=maximo_x; x= x+distancia_arboles){
     for (var z=minimo_z; z<=maximo_z; z= z+distancia_arboles){
          hacerArbol(x,z);  
-    }
-}
-    }
+                }
+            }   
+                }
     
     crearCampoArboles(-2000,2000,-2000,2000,500);
-
-
+    
     
      var marcador = new THREE.Object3D();
-    
+
     scene.add(marcador);
     marcador.add(avatar);
     marcador.add(camera);
     
     
-    function avanzar(objeto,grados){
+    function avanzar(objeto,radianes, atras = false){
+        if (atras) {
+            radianes = radianes + Math.PI;
+        }
+        var grados = (180*radianes / Math.PI);
        
         console.log("grados:" + grados);
         console.log("x:" + objeto.position.x );
         console.log("Z:" + objeto.position.z );
-        console.log ("Cos(grados):"+ Math.cos(grados));
-        console.log ("Sin(grados):" + Math.sin(grados));
-        objeto.position.x += 20*Math.cos(grados);
-        objeto.position.z += 20*Math.sin(grados);
+        console.log ("Cos(grados):"+ Math.cos(radianes));
+        console.log ("Sin(grados):" + Math.sin(radianes));
+        objeto.position.x += -20*Math.sin(radianes);
+        objeto.position.z += -20*Math.cos(radianes);
     }
     
     
@@ -138,5 +143,4 @@
 
     
     // Now, show what the camera sees on the screen:
-  renderer.render(scene, camera);
 </script>
