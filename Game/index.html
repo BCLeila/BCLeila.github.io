@@ -1,5 +1,7 @@
 <body></body>
 <script src="/lib/three.js"></script>
+<script src="/lib/Scoreboard.js"></script>
+<script src="/lib/tween.umd.js"></script>
 <script>
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
@@ -26,6 +28,17 @@
 
 
     // ******** START CODING ON THE NEXT LINE ********
+     //scoreboard
+    var scoreboard = new Scoreboard ();
+    scoreboard.countdown(45);
+    scoreboard.score();
+    scoreboard.help("Usa los cursores para moverte.Busca las frutas en los árboles que se mueven, aprieta el espacio para coger las frutas. ¡Acércate al árbol y coge las frutas antes de que desaparezcan!");
+    
+    scoreboard.onTimeExpired(gameOver);
+    
+    function gameOver (){
+        scoreboard.message("Se acabó el juego!");
+    }
     
     //Personaje
     
@@ -86,11 +99,13 @@
    }
     //Función árboles
     var noPermitido =[] ;
+    var treeTops =[];
     
     function hacerArbol(x,z) {
         var cilindro = new THREE.CylinderGeometry(50, 50, 200);
         var textura_tronco = new THREE.MeshBasicMaterial ({color:'sienna'});
         var tronco = new THREE.Mesh(cilindro, textura_tronco);
+        }
         
         var copa = new THREE.Mesh(
         new THREE.SphereGeometry(150),
@@ -104,7 +119,9 @@
         limite.position.y = -100;
         limite.rotation.x = -Math.PI/2;
         tronco.add(limite);
+        
         noPermitido.push(limite);
+        treetops.push(copa);
         
         
         
@@ -115,7 +132,9 @@
         tronco.position.set(x,-75,z);
         
         scene.add(tronco)
-    }
+    
+
+    
     var distancia_arboles = 800 ;
     var x_minima = 0;
     var x_maxima = 4000;
@@ -135,6 +154,21 @@
                 }
     
     crearCampoArboles(-2000,2000,-2000,2000,800);
+    
+    //Tesoro
+        var treasureTreeNumber () {
+            var rand = Math.random()*treeTops.length
+            treasureTreeNumber = Math.floor(rand);        
+    }
+    
+        function shakeTreasureTree(){
+            updateTreasureNumber();
+            var tween = new TWEEN.Tween({shake: 0});
+            tween.to({shake: 20* 2 * Math.PI}; 8*1000);
+            tween.onUpdate(shakeTreeUpdate);
+            tween.onComplete(shakeTreeComplete);
+            tween.start();   
+                            }
     
     
     //Marcador
